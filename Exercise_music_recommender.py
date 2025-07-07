@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import os
+import pickle
 
 # Custom files
 # from system.energy_calculator import FuzzyController, EnergyCalculator
@@ -69,15 +70,15 @@ def gym_members_count(df_gym):
     return df_gym.shape[0]
 
 
-# @st.cache_resource
-# def load_pickle(base_path, file_name):
-#     file_path = os.path.join(base_path, file_name)
-#     if os.path.exists(file_path):
-#         with open(file_path, 'rb') as file:
-#             return pickle.load(file)
-#     else:
-#         st.error(f"File {file_name} not found in {base_path}")
-#         return None
+@st.cache_resource
+def load_pickle(base_path, file_name):
+    file_path = os.path.join(base_path, file_name)
+    if os.path.exists(file_path):
+        with open(file_path, 'rb') as file:
+            return pickle.load(file)
+    else:
+        st.error(f"File {file_name} not found in {base_path}")
+        return None
 
 
 st.title("Exercise Music Recommender System")
@@ -110,8 +111,8 @@ track_uniques = load_index_data(DATA_DIR, 'track_uniques.csv')
 members_count = gym_members_count(df_gym)
 df_music_info = create_df_music_info(df_music)
 
-# #Load interaction matrix
-# interaction_matrix_user_item = load_pickle(MATRICES_DIR, 'interaction_matrix.pkl')
+#Load interaction matrix
+interaction_matrix_user_item = load_pickle(MATRICES_DIR, 'interaction_matrix.pkl')
 
 # #Load model
 # als_model = load_pickle(MODEL_DIR, 'als_model.pkl')
@@ -129,9 +130,9 @@ if df_gym is None or df_heart_rates is None or df_music is None or id_to_cluster
 #     st.error("Error loading ALS model. Please check the model in the resources/models directory.")
 #     st.stop()
 
-# if interaction_matrix_user_item is None:
-#     st.error("Error loading interaction matrix. Please check the matrix in the resources/matrices directory.")
-#     st.stop()
+if interaction_matrix_user_item is None:
+    st.error("Error loading interaction matrix. Please check the matrix in the resources/matrices directory.")
+    st.stop()
 
 st.markdown(f"### Select your user ID")
 
