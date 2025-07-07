@@ -121,7 +121,7 @@ df_music_info = create_df_music_info(df_music)
 #     st.error("Error loading data files. Please check the files in the resources/data directory.")
 #     st.stop()
 
-if df_gym is None or df_heart_rates is None or df_users is None or df_music is None or id_to_cluster is None or user_codes is None or track_codes is None or user_uniques is None or track_uniques is None:
+if df_gym is None or df_heart_rates is None or df_music is None or id_to_cluster is None or user_codes is None or track_codes is None or user_uniques is None or track_uniques is None:
     st.error("Error loading data files. Please check the files in the resources/data directory.")
     st.stop()
 
