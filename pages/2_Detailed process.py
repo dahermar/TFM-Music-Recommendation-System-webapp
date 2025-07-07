@@ -1,6 +1,13 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import math
+from scipy.stats import beta
+import scipy.stats
+import matplotlib.pyplot as plt
+import skfuzzy as fuzz
+from skfuzzy import control as ctrl
+import random
 import os
 import pickle
 
@@ -81,7 +88,7 @@ def load_pickle(base_path, file_name):
         return None
 
 
-st.title("Exercise Music Recommender System")
+st.title("Detailed recommendation process")
 
 if 'session_started' not in st.session_state:
     st.session_state.session_started = False
@@ -91,8 +98,6 @@ if 'session_minute' not in st.session_state:
 
 if 'genarated_bpms' not in st.session_state:
     st.session_state.genarated_bpms = None
-
-
 
 
 # Load data
@@ -133,6 +138,12 @@ if interaction_matrix_user_item is None:
 st.markdown(f"### Select your user ID")
 
 
+st.write("Gym Members Exercise Dataset")
+df_users_shown = df_gym[['Age', 'Gender', 'Weight (kg)','Height (m)', 'Session_Duration (hours)', 'Workout_Type']].copy()
+df_users_shown.rename(columns={'Session_Duration (hours)': 'Duration (hours)'}, inplace=True) 
+df_users_shown.index.name = "ID"
+df_users_shown.index = range(1, len(df_users_shown) + 1)
+st.dataframe(df_users_shown, height=200)
 
 selected_user_id = st.number_input(label = ' ', min_value=1, max_value=members_count, value=1, step=1) - 1
 session_button_caption = "Start session" if not st.session_state.session_started else "Restart session"
@@ -143,9 +154,10 @@ if st.session_state.session_started:
     hybrid_recommender = HybridRecommender(interaction_matrix_user_item, track_uniques, df_music_info, df_users, id_to_cluster, st.session_state.recommendations, als_recommender=als_recommender)
     music_recommender_2_stages = MusicRecommender2Stages(energy_calculator, hybrid_recommender, st.session_state.user_id, df_music_info)
     st.markdown(f"### Welcome user {st.session_state.user_id + 1}")
-
-
-    
+    st.write("User listened songs")
+    st.dataframe(st.session_state.listened_songs)
+    st.write("Recommended Songs")
+    st.dataframe(music_recommender_2_stages.get_recommendations_info())
 
 if st.button(session_button_caption):
     st.session_state.user_id = selected_user_id
@@ -164,9 +176,8 @@ if st.button(session_button_caption):
     st.rerun()
 
 if st.session_state.session_started:
-   
     if st.button('Pass time'):
-        minute, df_recommended_song, energy, _, _ = music_recommender_2_stages.recommend_song(plot_antecedent=False, plot_consequent=False)
+        minute, df_recommended_song, energy, bpm_current, bpm_before = music_recommender_2_stages.recommend_song(plot_antecedent=True, plot_consequent=True)
         st.session_state.session_minute = music_recommender_2_stages.get_session_minute()
         st.markdown(f"### Session minute: {minute}")
         if df_recommended_song is None:
@@ -174,8 +185,11 @@ if st.session_state.session_started:
         else:
             if minute == 0:
                 st.markdown("##### Warm-up song")
+            else:
+                st.write(f"Current bpm: {int(bpm_current)}, Last bpm: {int(bpm_before)}")
+            st.markdown(f"##### Energy level for next song: {energy}")
             
-            elif energy < 0.2:
+            if energy < 0.2:
                 st.markdown("##### Decrease training intensity significantly")
             elif energy < 0.4:
                 st.markdown("##### Decrease training intensity slightly")
@@ -186,17 +200,7 @@ if st.session_state.session_started:
             else:
                 st.markdown("##### Increase training intensity significantly")
             st.markdown("##### Recommended song")
-            df_tmp = df_recommended_song[['name', 'artist', 'duration_ms']].assign(
-                duration_ms=lambda df: df['duration_ms'].apply(lambda x: f"{int(x // 60000)}:{int((x % 60000) // 1000):02}")
-            ).rename(columns={'name': 'Name', 'artist': 'Artist', 'duration_ms': 'Duration (min:sec)'})
-
-            df_tmp.index = [''] * len(df_tmp)
-
-            # Mostrar sin índice
-            st.table(df_tmp)
-
-
-
+            st.dataframe(df_recommended_song)
 
 
 
