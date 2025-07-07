@@ -98,7 +98,7 @@ if 'genarated_bpms' not in st.session_state:
 # Load data
 df_gym = load_csv(DATA_DIR, 'modified_gym_members_exercise_tracking.csv')
 df_heart_rates = load_csv(DATA_DIR, 'gym_members_heart_rates.csv')
-df_users = load_csv(DATA_DIR, 'User Listening History_modified.csv')
+df_users = load_csv(DATA_DIR, 'User Listening History_reduced.csv')
 df_music = load_csv(DATA_DIR, 'Music Info.csv')
 
 id_to_cluster = load_cluster_mapping(DATA_DIR, 'track_clusters.csv')
