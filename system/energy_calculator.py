@@ -9,7 +9,7 @@ class FuzzyController:
     def __init__(self):
         self.bpm_antecedent = ctrl.Antecedent(np.arange(0, 1.01, 0.01), 'Normalized BPM')
         self.bpm_variation_antecedent = ctrl.Antecedent(np.arange(-0.2, 0.21, 0.01), 'Normalized BPM Variation')
-        self.energy_consequent = ctrl.Consequent(np.arange(-0.2, 1.21, 0.01), 'Energy')
+        self.energy_consequent = ctrl.Consequent(np.arange(-0.17, 1.18, 0.01), 'Energy')
         #self.energy_consequent = ctrl.Consequent(np.arange(0, 1.01, 0.01), 'Energy')
 
         self.bpm_antecedent['Very Light'] = fuzz.trapmf(self.bpm_antecedent.universe, [0.00, 0.00, 0.54, 0.60])

@@ -19,7 +19,7 @@ st.title("Stage 1 - Fuzzy Logic System")
 
 bpm_antecedent = ctrl.Antecedent(np.arange(0, 1.01, 0.01), 'Normalized BPM')
 bpm_variation_antecedent = ctrl.Antecedent(np.arange(-0.2, 0.21, 0.01), 'Normalized BPM Variation')
-energy_consequent = ctrl.Consequent(np.arange(-0.2, 1.21, 0.01), 'Energy')
+energy_consequent = ctrl.Consequent(np.arange(-0.17, 1.18, 0.01), 'Energy')
 
 bpm_antecedent['Very Light'] = fuzz.trapmf(bpm_antecedent.universe, [0.00, 0.00, 0.54, 0.60])
 bpm_antecedent['Light'] = fuzz.trapmf(bpm_antecedent.universe, [0.54, 0.60, 0.61, 0.67])
@@ -31,9 +31,9 @@ bpm_variation_antecedent['Negative'] = fuzz.trapmf(bpm_variation_antecedent.univ
 bpm_variation_antecedent['Zero'] = fuzz.trapmf(bpm_variation_antecedent.universe, [-0.15, -0.05, 0.05, 0.15])
 bpm_variation_antecedent['Positive'] = fuzz.trapmf(bpm_variation_antecedent.universe, [0.05, 0.15, 0.2, 0.21])
 
-energy_consequent['Low'] = fuzz.trapmf(energy_consequent.universe, [-0.2, -0.2, 0.0, 0.5])
-energy_consequent['Medium'] = fuzz.trapmf(energy_consequent.universe, [0.25, 0.5, 0.5, 0.75])
-energy_consequent['High'] = fuzz.trapmf(energy_consequent.universe, [0.5, 1, 1.21, 1.21])
+energy_consequent['Low'] = fuzz.trapmf(energy_consequent.universe, [-0.2, -0.2, 0.0, 0.375])
+energy_consequent['Medium'] = fuzz.trapmf(energy_consequent.universe, [0.125, 0.5, 0.5, 0.875])
+energy_consequent['High'] = fuzz.trapmf(energy_consequent.universe, [0.625, 1, 1.21, 1.21])
 
 st.subheader("Antecedents")
 
