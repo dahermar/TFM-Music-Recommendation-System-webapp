@@ -23,8 +23,8 @@ energy_consequent = ctrl.Consequent(np.arange(-0.2, 1.21, 0.01), 'Energy')
 
 bpm_antecedent['Very Light'] = fuzz.trapmf(bpm_antecedent.universe, [0.00, 0.00, 0.54, 0.60])
 bpm_antecedent['Light'] = fuzz.trapmf(bpm_antecedent.universe, [0.54, 0.60, 0.61, 0.67])
-bpm_antecedent['Moderate'] = fuzz.trapmf(bpm_antecedent.universe, [0.61, 0.67, 0.74, 0.80])
-bpm_antecedent['Vigorous'] = fuzz.trapmf(bpm_antecedent.universe, [0.74, 0.80, 0.93, 0.99])
+bpm_antecedent['Moderate'] = fuzz.trapmf(bpm_antecedent.universe, [0.61, 0.67, 0.70, 0.84])
+bpm_antecedent['Vigorous'] = fuzz.trapmf(bpm_antecedent.universe, [0.70, 0.84, 0.93, 0.99])
 bpm_antecedent['Near Maximal'] = fuzz.trapmf(bpm_antecedent.universe, [0.93, 0.99, 1.00, 1.00])
 
 bpm_variation_antecedent['Negative'] = fuzz.trapmf(bpm_variation_antecedent.universe, [-0.2, -0.2, -0.15, -0.05])
