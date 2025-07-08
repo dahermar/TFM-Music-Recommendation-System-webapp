@@ -200,7 +200,7 @@ if st.session_state.session_started:
             else:
                 st.markdown("##### Increase training intensity significantly")
             st.markdown("##### Recommended song")
-            st.dataframe(df_recommended_song)
+            st.dataframe(df_recommended_song.assign(duration_ms=lambda df: df['duration_ms'].apply(lambda x: f"{int(x // 60000)}:{int((x % 60000) // 1000):02}")))
 
 
 
