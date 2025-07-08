@@ -186,9 +186,9 @@ if st.session_state.session_started:
             else:
                 st.markdown("##### Increase training intensity significantly")
             st.markdown("##### Recommended song")
-            df_tmp = df_recommended_song[['name', 'artist', 'duration_ms']].assign(
+            df_tmp = df_recommended_song[['name', 'artist', 'duration_ms', 'energy']].assign(
                 duration_ms=lambda df: df['duration_ms'].apply(lambda x: f"{int(x // 60000)}:{int((x % 60000) // 1000):02}")
-            ).rename(columns={'name': 'Name', 'artist': 'Artist', 'duration_ms': 'Duration (min:sec)'})
+            ).rename(columns={'name': 'Name', 'artist': 'Artist', 'duration_ms': 'Duration (min:sec)', 'energy': 'Energy'})
 
             df_tmp.index = [''] * len(df_tmp)
 
