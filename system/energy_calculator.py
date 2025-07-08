@@ -23,9 +23,9 @@ class FuzzyController:
         self.bpm_variation_antecedent['Positive'] = fuzz.trapmf(self.bpm_variation_antecedent.universe, [0.05, 0.15, 0.2, 0.21])
 
         
-        self.energy_consequent['Low'] = fuzz.trapmf(self.energy_consequent.universe, [-0.2, -0.2, 0.0, 0.5])
-        self.energy_consequent['Medium'] = fuzz.trapmf(self.energy_consequent.universe, [0.25, 0.5, 0.5, 0.75])
-        self.energy_consequent['High'] = fuzz.trapmf(self.energy_consequent.universe, [0.5, 1, 1.21, 1.21])
+        self.energy_consequent['Low'] = fuzz.trapmf(self.energy_consequent.universe, [-0.2, -0.2, 0.0, 0.375])
+        self.energy_consequent['Medium'] = fuzz.trapmf(self.energy_consequent.universe, [0.125, 0.5, 0.5, 0.875])
+        self.energy_consequent['High'] = fuzz.trapmf(self.energy_consequent.universe, [0.625, 1, 1.21, 1.21])
 
         self.energy_consequent.defuzzify_method = 'centroid'
 
